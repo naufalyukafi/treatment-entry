@@ -1,8 +1,7 @@
-
 export default class Patient {
     patientName: string;
     dateOfTreatment: Date;
-    treatmentDescription: string;
+    treatmentDescription: string[];
     medicationsPrescribed: string[];
     costOfTreatment: number;
     patientId: string | number;
@@ -11,7 +10,7 @@ export default class Patient {
         patientId: string | number,
         patientName: string,
         dateOfTreatment: Date,
-        treatmentDescription: string,
+        treatmentDescription: string[],
         medicationsPrescribed: string[],
         costOfTreatment: number
     ) {
