@@ -1,5 +1,9 @@
 # Treatment Entry Service
 
+## Stack
+- Expres.js 
+- Firebase Firestore (Firebase Admin)
+  
 ## System Requirement
 
 Recommended dependencies are :

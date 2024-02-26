@@ -1,5 +1,9 @@
 # Treatment Entry
 
+## Stack
+- React.js
+- Chakra UI
+  
 ## System Requirement
 
 Recommended dependencies are :
