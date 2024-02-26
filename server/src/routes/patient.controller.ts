@@ -59,7 +59,7 @@ const getPatient = async (req: Request, res: Response, next: NextFunction) => {
         const data = await database.collection('patient').get();
         const patientsArray: PatientInterface[] = [];
         if (data.empty) {
-            res.status(404).send('No patient record found');
+            response.success([], res);
         } else {
             data.forEach(doc => {
                 const patient: PatientInterface = new Patient(

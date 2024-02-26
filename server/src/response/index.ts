@@ -28,7 +28,7 @@ const notFound = <T>(data: T, res: any): void => res.status(404).send(createJSON
 
 const internalServerError = (err: any, res: any): void => res.status(501).send(createJSON<null>(501, 'Something problem was happen', null));
 
-const errorParams = (mssg: string, res: any): void => res.status(403).send(createJSON<null>(501, mssg, null));
+const errorParams = (mssg: string, res: any): void => res.status(400).send(createJSON<null>(400, mssg, null));
 
 const forbidden = <T>(data: T, res: any): void => res.status(403).send(createJSON<T>(403, 'Forbidden', data));
 
