@@ -1,10 +1,11 @@
 import config from './src/config'
+import { logging } from './src/middleware/logging'
 const express = require('express');
 const dotenv = require("dotenv");
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet')
-const { logging } = require('./src/middleware/logging');
+// const { logging } = require('./src/middleware/logging');
 
 dotenv.config();
 const app = express();

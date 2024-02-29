@@ -56,7 +56,17 @@ const addPatient = async (req: Request, res: Response) => {
 
 const getPatient = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const data = await database.collection('patient').get();
+        const page = req.query.page ? parseInt(req.query.page as string) : 1;
+        const pageSize = req.query.pageSize ? parseInt(req.query.pageSize as string) : 10;
+        const searchQuery = req.query.search ? req.query.search.toString() : '';
+        let query = database.collection('patient') as FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
+        if (searchQuery) {
+            query.where('patientName', '>=', searchQuery).where('patientName', '<=', searchQuery + '\uf8ff') //unicode
+                .where('treatmentDescription', 'array-contains', searchQuery); //search for array
+        }
+
+        const data = await query.orderBy('patientName').offset((page - 1) * pageSize).limit(pageSize).get();
+
         const patientsArray: PatientInterface[] = [];
         if (data.empty) {
             response.success([], res);
@@ -72,7 +82,8 @@ const getPatient = async (req: Request, res: Response, next: NextFunction) => {
                 );
                 patientsArray.push(patient);
             });
-            response.success(patientsArray, res);
+
+            response.success(patientsArray, res, pageSize, page);
         }
     } catch (error) {
         res.status(400).send(error);
