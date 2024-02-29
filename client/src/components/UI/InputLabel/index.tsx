@@ -1,4 +1,4 @@
-import { Input, InputProps, FormLabel, FormControl } from '@chakra-ui/react'
+import { Input, InputProps, FormLabel, FormControl, FormErrorMessage } from '@chakra-ui/react'
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface InputLabelProps extends InputProps {
@@ -7,18 +7,27 @@ interface InputLabelProps extends InputProps {
     placeholder: string;
     size: string;
     type?: string;
+    failed?: {
+        status: boolean;
+        message: string;
+    };
 }
 
-const InputLabel = ({ name, label, placeholder, type = "text", size = "lg", ...rest }: InputLabelProps) => {
-    const { control } = useFormContext();
+const InputLabel = ({ name, label, placeholder, type = "text", size = "lg", failed, ...rest }: InputLabelProps) => {
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
     return (
-        <FormControl mb={4}>
+        <FormControl mb={4} isInvalid={failed?.status || !!errors[name]}>
             <FormLabel fontSize="16px">{label}</FormLabel>
             <Controller
                 control={control}
                 name={name}
                 render={({ field }) => (
                     <Input
+                        isInvalid={failed?.status || !!errors[name]}
+                        errorBorderColor='red.300'
                         required={true}
                         variant='filled'
                         type={type}
@@ -30,6 +39,7 @@ const InputLabel = ({ name, label, placeholder, type = "text", size = "lg", ...r
                     />
                 )}
             />
+            <FormErrorMessage>{errors[name]?.message as string}</FormErrorMessage>
         </FormControl>
     )
 }

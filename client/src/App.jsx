@@ -86,7 +86,7 @@ function App() {
         icon: "success"
       });
     }).catch((err) => {
-      alert('error', err)
+      // alert('error', err)
       Swal.fire({
         title: "Error",
         text: "Something went wrong!",
